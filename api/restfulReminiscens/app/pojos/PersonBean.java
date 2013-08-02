@@ -123,4 +123,11 @@ public class PersonBean implements Serializable {
 		}
 		this.birthplace.setCityId(birthplaceId);
 	}
+	
+	public void setBirthplaceName(String birthplaceName) {
+		if (birthplace == null) {
+			birthplace = new CityBean();
+		}
+		this.birthplace.setName(birthplaceName);
+	}
 }

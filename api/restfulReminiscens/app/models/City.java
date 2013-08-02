@@ -84,6 +84,14 @@ public class City extends Model {
     	return result;
     }
     
+	public static City getCityByName(String cityName) {
+		City result = find.where()
+    			.eq("name", cityName)
+    			.findUnique();
+    	return result;
+	}
+
+    
     public static Double getDistance(Long city1, Long city2) {
     	City c1 = models.City.read(city1);
     	City c2 = models.City.read(city2);
