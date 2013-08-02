@@ -70,9 +70,10 @@ public class User extends Model implements Subject {
 	@Column(name = "conf_type")
 	private String confType;
 
+
 	@Temporal(TemporalType.DATE)
-	@Column(name = "creation_date")
-	// @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+	@Column
+	@org.hibernate.annotations.Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
 	private DateTime creationDate;
 
 	@Column
@@ -82,19 +83,11 @@ public class User extends Model implements Subject {
 	private List<LinkedAccount> linkedAccounts;
 
 	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "User_Security_Roles", 
-		joinColumns = { 
-			@JoinColumn(name = "user_id", referencedColumnName = "user_id", updatable = true, insertable = true) }, 
-			inverseJoinColumns = { @JoinColumn(name = "role_id", referencedColumnName = "role_id", updatable = true, insertable = true) 
-		})
+	@JoinTable(name = "User_Security_Roles", joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "user_id", updatable = true, insertable = true) }, inverseJoinColumns = { @JoinColumn(name = "role_id", referencedColumnName = "role_id", updatable = true, insertable = true) })
 	private List<SecurityRole> roles;
 
 	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "User_User_Permission", 
-	joinColumns = { 
-		@JoinColumn(name = "user_id", referencedColumnName = "user_id", updatable = true, insertable = true) }, 
-		inverseJoinColumns = { @JoinColumn(name = "permission_id", referencedColumnName = "permission_id", updatable = true, insertable = true) 
-	})
+	@JoinTable(name = "User_User_Permission", joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "user_id", updatable = true, insertable = true) }, inverseJoinColumns = { @JoinColumn(name = "permission_id", referencedColumnName = "permission_id", updatable = true, insertable = true) })
 	private List<UserPermission> permissions;
 
 	public static Model.Finder<Long, User> find = new Model.Finder<Long, User>(
@@ -209,15 +202,15 @@ public class User extends Model implements Subject {
 				models.Person p = PlayDozerMapper.getInstance().map(
 						identity.getPerson(), Person.class);
 				user.setPerson(p);
-				
+
 				City c = p.getBirthplace();
-				
-				if (c!= null) {
-					if (c.getCityId()==null) {
+
+				if (c != null) {
+					if (c.getCityId() == null) {
 						c = models.City.getCityByName(c.getName());
 					}
 				}
-				
+
 				p.setBirthplace(c);
 			} else {
 				user.setPerson(null);
@@ -225,20 +218,21 @@ public class User extends Model implements Subject {
 		}
 
 		/*
-		 * 4. If part of the signup form there is also a name, and the person bean does not have the name on it
-		 *    add this name as Firstname
+		 * 4. If part of the signup form there is also a name, and the person
+		 * bean does not have the name on it add this name as Firstname
 		 */
 		if (authUser instanceof NameIdentity) {
 			final NameIdentity identity = (NameIdentity) authUser;
 			final String name = identity.getName();
-			if (user.getPerson() != null && user.getPerson().getFirstname()==null) {
+			if (user.getPerson() != null
+					&& user.getPerson().getFirstname() == null) {
 				user.getPerson().setFirstname(name);
 			}
 		}
 
-
 		/*
-		 * 5. If the picture URL is also set on the User form, add the picture to the user
+		 * 5. If the picture URL is also set on the User form, add the picture
+		 * to the user
 		 */
 		if (authUser instanceof PicturedIdentity) {
 			final PicturedIdentity identity = (PicturedIdentity) authUser;
@@ -248,18 +242,17 @@ public class User extends Model implements Subject {
 			}
 		}
 
-//		if (authUser instanceof ExtendedIdentity) {
-//			final ExtendedIdentity identity = (ExtendedIdentity) authUser;
-//			if (identity.getFirstName() != null) {
-//				person.setFirstname(identity.getFirstName());
-//			}
-//			person.setLastname(identity.getLastName());
-//			if (identity.getGender() != null
-//					&& !"".trim().equals(identity.getGender()))
-//				person.setGender(identity.getGender().substring(0, 1));
-//
-//		}
-
+		// if (authUser instanceof ExtendedIdentity) {
+		// final ExtendedIdentity identity = (ExtendedIdentity) authUser;
+		// if (identity.getFirstName() != null) {
+		// person.setFirstname(identity.getFirstName());
+		// }
+		// person.setLastname(identity.getLastName());
+		// if (identity.getGender() != null
+		// && !"".trim().equals(identity.getGender()))
+		// person.setGender(identity.getGender().substring(0, 1));
+		//
+		// }
 
 		/*
 		 * 6. always the email is going to be validated by google
@@ -268,11 +261,10 @@ public class User extends Model implements Subject {
 			user.setEmailValidated(true);
 		}
 
-
 		/*
 		 * 7. Generate the username
 		 */
-		
+
 		user.setUsername(models.User.generateUsername(user.getEmail()));
 
 		/*
@@ -290,7 +282,7 @@ public class User extends Model implements Subject {
 	private static String generateUsername(String email) {
 		String newUsername = email.split("@")[0];
 		int count = models.User.usernameExists(newUsername);
-		if (count>0) {
+		if (count > 0) {
 			newUsername += (count++);
 		}
 		return newUsername;
@@ -298,8 +290,7 @@ public class User extends Model implements Subject {
 
 	private static int usernameExists(String newUsername) {
 		return find.where().eq("active", true)
-				.like("username","%"+newUsername+"%")
-				.findList().size();
+				.like("username", "%" + newUsername + "%").findList().size();
 	}
 
 	// TODO chek everything from here

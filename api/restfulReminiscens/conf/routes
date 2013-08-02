@@ -3,7 +3,7 @@
 # ~~~~
 
 # Home page
-#GET     /                           controllers.Application.index()
+GET     /                           controllers.Application.index()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
@@ -23,7 +23,7 @@ POST    /login                          controllers.Application.doLogin()
 GET     /accounts/verify/:token         controllers.Signup.verify(token: String)
 GET     /accounts/unverified            controllers.Signup.unverified()
 GET     /accounts/exists                controllers.Signup.exists()
-GET    /login/denied                    controllers.Application.onLoginUserNotFound()
+GET     /login/denied                   controllers.Application.onLoginUserNotFound()
 
 
 
@@ -36,7 +36,7 @@ GET    /login/denied                    controllers.Application.onLoginUserNotFo
 #DELETE  /login                          controllers.UserControl.logout(sid: Long)
 
 ### from socialgym
-GET     /login                          controllers.Application.index()
+#GET     /login                          controllers.Application.index()
 GET     /authenticated                  controllers.Restricted.index()
 GET     /login/:id                      controllers.Restricted.id(id: String)
 GET     /logout                         com.feth.play.module.pa.controllers.Authenticate.logout()
@@ -107,9 +107,10 @@ GET     /memento/:decade/:place         controllers.PublicMementoControl.getMeme
 # Utilities (cities, countries, other stuff)
 GET     /city                           controllers.Application.getCities()
 GET     /country/:countryId/city        controllers.Application.getCitiesByCountryId(countryId: Long)
-GET     /country/:countryName/city      controllers.Application.getCitiesByCountryName(countryName: String)
+GET     /country/name/:countryName/city controllers.Application.getCitiesByCountryName(countryName: String)
 GET     /city/sync/:lastCityId          controllers.Application.getNewCities(lastCityId: Long)
-GET     /city/:cityName                 controllers.Application.getCitiesByCountryName(cityName: String)
+GET     /city/:cityId                   controllers.Application.getCitiesById(cityId: Long)
+GET     /city/name/:cityName            controllers.Application.getCitiesByCountryName(cityName: String)
 GET     /upload                         controllers.Application.testUpload()
 POST    /upload                         controllers.Application.upload()
 

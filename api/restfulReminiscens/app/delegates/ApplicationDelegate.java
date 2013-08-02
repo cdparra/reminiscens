@@ -1,10 +1,20 @@
 package delegates;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
+import org.dozer.DozerBeanMapper;
+import org.joda.time.DateTime;
+
+import akka.event.slf4j.Logger;
+
+import play.Play;
+import play.mvc.Http.MultipartFormData.FilePart;
 import pojos.CityBean;
-import pojos.QuestionBean;
+import pojos.FileBean;
+import utils.FileUtilities;
 import utils.PlayDozerMapper;
 
 public class ApplicationDelegate {
@@ -69,6 +79,56 @@ public class ApplicationDelegate {
 		}
 		return pojosCities;
 	}
-	
-	
+
+	public CityBean getCitiesById(Long cityId) {
+		models.City city = models.City.read(cityId);
+		CityBean cityBean = PlayDozerMapper.getInstance().map(city, CityBean.class);
+		return cityBean;
+	}	
+
+	public FileBean saveFile(FilePart file, FileBean fileBean) {
+		/*
+		 * 1. Prepare file metadata before saving the file in the final destination
+		 */
+		String uploadDir = Play.application().configuration().getString("files.home");
+		String filesBaseURL = Play.application().configuration().getString("files.baseurl");
+		String fileName = file.getFilename();
+		String fullPath = uploadDir+ FileUtilities.slash + fileName;
+		String contentType = file.getContentType();
+		File uploadFile = file.getFile();
+		//String filesBaseURL = "http://test.reminiscens.me/files";
+
+		Logger.root().debug("Saving File....");
+		Logger.root().debug("--> fileName=" + fileName);
+		Logger.root().debug("--> contentType=" + contentType);
+		Logger.root().debug("--> uploadFile=" + uploadFile);
+
+		/*
+		 * 2. Save the file in the final destination
+		 */
+		File localFile = new File(fullPath);
+		uploadFile.renameTo(localFile);		
+		Logger.root().debug("--> localFile=" + localFile);
+
+		/*
+		 * 3. Generate Hashcode to use as new name
+		 */
+		String hashcode = UUID.nameUUIDFromBytes(fullPath.getBytes()).toString();
+		/* 
+		 * 4. Save File metadata in Database
+		 */
+		fileBean.setFilename(fileName);
+		fileBean.setURI(filesBaseURL + "/" + fileName);
+		fileBean.setContentType(contentType);
+		fileBean.setCreationDate(DateTime.now());
+		fileBean.setHashcode(hashcode);
+		Logger.root().debug("--> creationDate=" + fileBean.getCreationDate());
+		Logger.root().debug("--> hashcode=" + fileBean.getHashcode());
+		
+		models.File f = PlayDozerMapper.getInstance().map(fileBean, models.File.class);
+		f.save();
+		fileBean.setFileId(f.getFileId());
+		return fileBean;
+	}
+
 }

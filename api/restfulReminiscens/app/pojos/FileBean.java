@@ -23,8 +23,6 @@ public class FileBean  implements Serializable {
 	private Long owner;
 	@JodaDateTime(format = "yyyy-MM-dd HH:mm:ss")
 	private DateTime creationDate;
-	private File file; 
-	
 	
 	public String getFilename() {
 		return filename;
@@ -76,11 +74,5 @@ public class FileBean  implements Serializable {
 	}
 	public void setFileId(Long fileId) {
 		this.fileId = fileId;
-	}
-	public File getFile() {
-		return file;
-	}
-	public void setFile(File file) {
-		this.file = file;
 	}
 }

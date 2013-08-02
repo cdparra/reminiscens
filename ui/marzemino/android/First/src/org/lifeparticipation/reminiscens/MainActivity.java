@@ -2,10 +2,9 @@ package org.lifeparticipation.reminiscens;
 
 import org.apache.cordova.DroidGap;
 
-import com.example.first.R;
+import org.lifeparticipation.reminiscens.R;
 
 import android.os.Bundle;
-import android.app.Activity;
 import android.content.res.Configuration;
 import android.view.Menu;
 

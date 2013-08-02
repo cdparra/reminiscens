@@ -8,6 +8,7 @@ import org.joda.time.format.DateTimeFormat;
 
 import play.Application;
 import play.GlobalSettings;
+import play.Logger;
 import play.data.format.Formatters;
 import play.mvc.Action;
 import play.mvc.Http.Context;
@@ -348,6 +349,52 @@ public class Global extends GlobalSettings {
 				// Configuration.root().getString("application.context");
 				// ctx.response().discardCookie("PLAY_SESSION");
 				// ctx.response().discardCookie("PLAY_SESSION", context);
+				
+				Request req = ctx.request();
+				String play_session = req.getHeader("PLAY_SESSION");
+				Logger.debug("play session header: " + play_session);
+				
+//				if(play_session != null && !"".trim().equals(play_session)){
+//					scala.collection.immutable.Map<String, String> values = Session.decode(play_session);
+//				 if(values.isEmpty()){
+//				 Logger.warn("ignoring a not valid session ! : " + play_session);
+//				 }else{
+//				 try {
+//				 //getting the request field from anon class
+//				 Field requestField = request.getClass().getDeclaredField("req$2");
+//				 play.api.mvc.Request requestInstance = (play.api.mvc.Request)
+//				 requestField.get(request);
+//				 // getting the session field
+//				 Field sessionField =
+//				 requestInstance.getClass().getDeclaredField("session");
+//				 sessionField.setAccessible(true);
+//				 Session sessionInstance = (Session) sessionField.get(requestInstance);
+//				 //getting the data from the session
+//				 Field dataField = sessionInstance.getClass().getDeclaredField("data");
+//				 dataField.setAccessible(true);
+//				 dataField.set(sessionInstance, Session.decode(play_session));
+//				 //everything was ok, so we'll add the cookie to the session because maybe
+//				 is going to be used later
+//				 // Field cookiesField =
+//				 requestInstance.getClass().getDeclaredField("cookies");
+//				 // cookiesField.setAccessible(true);
+//				 // cookiesField.set(requestInstance,
+//				 Session.encodeAsCookie(play_session));
+//				 Logger.debug("added to the session: " + sessionInstance);
+				// } catch (SecurityException e) {
+				// Logger.error(e.getMessage());
+				// } catch (NoSuchFieldException e) {
+				// Logger.error(e.getMessage());
+				// }catch (IllegalAccessException e) {
+				// Logger.error(e.getMessage());
+				// }
+				// }
+				//
+				// }
+				// return super.onRequest(request, actionMethod);
+				// }
+				
+				
 				return r;
 			}
 		};

@@ -257,6 +257,7 @@ public class MyUsernamePasswordAuthProvider
 
 		final Lang lang = Lang.preferred(ctx.request().acceptLanguages());
 		final String langCode = lang.code();
+				
 
 		final String html = getEmailTemplate(
 				"views.html.account.signup.email.verify_email", langCode, url,
