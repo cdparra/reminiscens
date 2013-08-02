@@ -54,3 +54,12 @@ local.properties
 # Eclipse project files
 .classpath
 .project
+
+
+PID
+api/PID
+api/lifeapi.log
+api/restfulReminiscens/PID
+api/restfulReminiscens/lifeapi.log
+api/restfulReminiscens/start.sh
+lifeapi.log
