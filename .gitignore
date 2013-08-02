@@ -63,3 +63,4 @@ api/restfulReminiscens/PID
 api/restfulReminiscens/lifeapi.log
 api/restfulReminiscens/start.sh
 lifeapi.log
+api/restfulReminiscens/project/target/streams/$global/update/$global/out
