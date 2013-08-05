@@ -1,5 +1,5 @@
 /**
- * javascript functions to post files to a restful service
+ * javascript example of posting files post files to a restful service
  * (base in jQuery Upload File)
  * 
  */

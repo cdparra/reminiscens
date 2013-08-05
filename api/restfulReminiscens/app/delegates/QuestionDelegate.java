@@ -2,11 +2,9 @@ package delegates;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-import enums.QuestionChapter;
 
 import pojos.QuestionBean;
 import utils.PlayDozerMapper;
@@ -88,7 +86,7 @@ public class QuestionDelegate {
 		return pojosQuestions;
 	}
 	
-	private static void addAllTimesQuestions(List<QuestionBean> pojosQuestions) {
+	public static void addAllTimesQuestions(List<QuestionBean> pojosQuestions) {
 		List<models.Question> modelQuestions = models.Question.readByChapter("All times");
 		List<QuestionBean> allTimeQuestions = new ArrayList<QuestionBean>();
 		for (models.Question question : modelQuestions) {

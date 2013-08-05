@@ -117,4 +117,26 @@ public class MementoDelegate {
 		PlayDozerMapper.getInstance().map(mentionPerson, mentionPersonBean);
 		return null;
 	}
+
+	public List<MementoBean> getPersonProtagonistMemento(Long personId) {
+		List<models.Memento> modelMementos = models.Memento.getAllMentionMementoByPersonId(personId);
+		List<MementoBean> pojosMementos = new ArrayList<MementoBean>();
+		for (models.Memento memento : modelMementos) {
+			MementoBean mementoBean = PlayDozerMapper.getInstance().map(
+					memento, MementoBean.class);
+			pojosMementos.add(mementoBean);
+		}
+		return pojosMementos;
+	}
+
+	public List<MementoBean> getPersonMentiontMemento(Long personId) {
+		List<models.Memento> modelMementos = models.Memento.getAllStoryMementoByPersonId(personId);
+		List<MementoBean> pojosMementos = new ArrayList<MementoBean>();
+		for (models.Memento memento : modelMementos) {
+			MementoBean mementoBean = PlayDozerMapper.getInstance().map(
+					memento, MementoBean.class);
+			pojosMementos.add(mementoBean);
+		}
+		return pojosMementos;
+	}
 }

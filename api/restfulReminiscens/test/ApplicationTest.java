@@ -1,5 +1,3 @@
-import models.User;
-
 import org.junit.*;
 import org.mindrot.jbcrypt.BCrypt;
 

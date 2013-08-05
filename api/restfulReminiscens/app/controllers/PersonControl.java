@@ -2,6 +2,10 @@ package controllers;
 
 import java.util.List;
 
+import annotations.CustomRestrict;
+import be.objectify.deadbolt.java.actions.Restrict;
+
+
 import play.mvc.*;
 import play.data.*;
 import pojos.MentionPersonBean;
@@ -9,7 +13,7 @@ import pojos.PersonBean;
 import pojos.RelationshipBean;
 import pojos.ResponseStatusBean;
 import static play.libs.Json.toJson;
-
+import enums.MyRoles;
 import delegates.PersonDelegate;
 import enums.ResponseStatus;
 
@@ -23,6 +27,7 @@ public class PersonControl extends Controller {
 	 * Get a complete list of people mentioned in reminiscens
 	 * @return
 	 */
+	@CustomRestrict(value = {MyRoles.ADMIN}, config = @Restrict({}))
 	public static Result getPersonAll() {
 		List<PersonBean> lp = PersonDelegate.getInstance().getAll();
 		return lp != null ? ok(toJson(lp)) : notFound();

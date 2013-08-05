@@ -1,17 +1,5 @@
+@main("Reminiscens RESTful API") {
 
-@import com.feth.play.module.pa.views.html._
+    <iframe src="http://docs.reminiscens.apiary.io/" seamless width=1200px height=900 sandbox="allow-scripts"></iframe>
 
-@main("Play! Authenticate simple OAuth sample") {
-
-@currentAuth() { auth =>
-    @if(auth != null) {
-        <a href="@com.feth.play.module.pa.controllers.routes.Authenticate.logout">Logout</a>
-        <br/><br/>
-    }
-}
-
-Login/Signup: 
-@_providerPartial(skipCurrent=false)
-    
-    <br/><br/>
 }

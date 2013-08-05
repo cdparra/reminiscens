@@ -11,12 +11,14 @@ import pojos.QuestionBean;
 public class QuestionsControl extends Controller {
 
     public static Result getGeneralQuestionsForYear(Integer byear, Integer fyear) {
-		List<QuestionBean> lp = QuestionDelegate.getInstance().getQuestionsForLifeDecade(byear,fyear);
+		QuestionDelegate.getInstance();
+		List<QuestionBean> lp = QuestionDelegate.getQuestionsForLifeDecade(byear,fyear);
 		return lp != null ? ok(toJson(lp)) : notFound();
 	}
 
 	public static Result getGeneralQuestionsForLifeChapter(String chapter) {
-		List<QuestionBean> lp = QuestionDelegate.getInstance().getQuestionsForLifeChapter(chapter);
+		QuestionDelegate.getInstance();
+		List<QuestionBean> lp = QuestionDelegate.getQuestionsForLifeChapter(chapter);
 		return lp != null ? ok(toJson(lp)) : notFound();
 	}
 }

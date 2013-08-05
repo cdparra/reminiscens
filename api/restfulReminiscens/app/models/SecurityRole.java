@@ -22,6 +22,7 @@ import javax.persistence.Table;
 
 import play.db.ebean.Model;
 import be.objectify.deadbolt.core.models.Role;
+import enums.MyRoles;
 
 /**
  * @author Steve Chaloner (steve@objectify.be)
@@ -39,17 +40,29 @@ public class SecurityRole extends Model implements Role {
 	public Long id;
 
 	@Column(name="name")
-	public String roleName;
+	public String name;
 
 	public static final Finder<Long, SecurityRole> find = new Finder<Long, SecurityRole>(
 			Long.class, SecurityRole.class);
 
 	@Override
 	public String getName() {
-		return roleName;
+		return name;
 	}
+	
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
+	public void setName(MyRoles name) {
+		this.name = name.toString();
+	}
+//	
+//	public void setName(String name) {
+//		this.name = name;
+//	}
 
 	public static SecurityRole findByRoleName(String roleName) {
-		return find.where().eq("roleName", roleName).findUnique();
+		return find.where().eq("name", roleName).findUnique();
 	}
 }

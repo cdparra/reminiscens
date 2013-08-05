@@ -2,12 +2,10 @@ package controllers;
 
 import static play.libs.Json.toJson;
 import delegates.LifeStoryDelegate;
-import delegates.MementoDelegate;
 import enums.ResponseStatus;
 import play.mvc.*;
 import play.data.*;
 import pojos.LifeStoryBean;
-import pojos.MementoBean;
 import pojos.ResponseStatusBean;
 
 public class LifeStoryControl extends Controller {

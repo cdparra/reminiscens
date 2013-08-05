@@ -28,6 +28,19 @@ public class MementoControl extends Controller {
 		return lp != null ? ok(toJson(lp)) : notFound();
 	}
 
+
+	public static Result getPersonProtagonistMemento(Long personId) {
+		List<MementoBean> lp = MementoDelegate.getInstance()
+				.getPersonProtagonistMemento(personId);
+		return lp != null ? ok(toJson(lp)) : notFound();
+	}
+
+	public static Result getPersonMentionMemento(Long personId) {
+		List<MementoBean> lp = MementoDelegate.getInstance()
+				.getPersonMentiontMemento(personId);
+		return lp != null ? ok(toJson(lp)) : notFound();
+	}
+	
 	public static Result getMemento(Long id) {
 		MementoBean bean = MementoDelegate.getInstance().getMemento(id);
 		return bean != null ? ok(toJson(bean)) : notFound();

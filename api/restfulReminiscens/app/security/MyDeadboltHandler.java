@@ -62,4 +62,6 @@ public class MyDeadboltHandler extends AbstractDeadboltHandler {
 		final String originalUrl = context.request().uri();
 		return forbidden("Not enough privileges to perform '" + originalUrl + "'");
 	}
+	
+	
 }

@@ -26,7 +26,7 @@ import com.feth.play.module.pa.user.EmailIdentity;
 import com.feth.play.module.pa.user.NameIdentity;
 import com.feth.play.module.pa.user.PicturedIdentity;
 
-import enums.Roles;
+import enums.MyRoles;
 
 @Entity
 @Table(name = "User")
@@ -168,7 +168,7 @@ public class User extends Model implements Subject {
 		 * the user instance to be created
 		 */
 		user.roles = Collections.singletonList(SecurityRole
-				.findByRoleName(Roles.MEMBER.toString()));
+				.findByRoleName(MyRoles.MEMBER.toString()));
 		user.linkedAccounts = Collections.singletonList(LinkedAccount
 				.create(authUser));
 		user.active = true;
@@ -293,7 +293,7 @@ public class User extends Model implements Subject {
 				.like("username", "%" + newUsername + "%").findList().size();
 	}
 
-	// TODO chek everything from here
+	// TODO check play authenticate inherited code
 	public static void merge(final AuthUser oldUser, final AuthUser newUser) {
 		User.findByAuthUserIdentity(oldUser).merge(
 				User.findByAuthUserIdentity(newUser));
@@ -385,151 +385,74 @@ public class User extends Model implements Subject {
 
 	/* GETTERS AND SETTERS */
 
-	/**
-	 * @return the userId
-	 */
 	public Long getUserId() {
 		return userId;
 	}
 
-	/**
-	 * @param userId
-	 *            the userId to set
-	 */
 	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 
-	/**
-	 * @return the person
-	 */
 	public Person getPerson() {
 		return person;
 	}
 
-	/**
-	 * @param person
-	 *            the person to set
-	 */
 	public void setPerson(Person person) {
 		this.person = person;
 	}
 
-	/**
-	 * @return the nickname
-	 */
 	public String getUsername() {
 		return username;
 	}
 
-	/**
-	 * @param nickname
-	 *            the nickname to set
-	 */
 	public void setUsername(String nickname) {
 		this.username = nickname;
 	}
 
-	/**
-	 * @return the email
-	 */
 	public String getEmail() {
 		return email;
 	}
 
-	/**
-	 * @param email
-	 *            the email to set
-	 */
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
-	/**
-	 * @return the lang
-	 */
 	public String getLocale() {
 		return locale;
 	}
 
-	/**
-	 * @param lang
-	 *            the lang to set
-	 */
 	public void setLocale(String lang) {
 		this.locale = lang;
 	}
 
-	/**
-	 * @return the email_verified
-	 */
 	public Boolean getEmailVerified() {
 		return emailVerified;
 	}
 
-	/**
-	 * @param email_verified
-	 *            the email_verified to set
-	 */
 	public void setEmailVerified(Boolean email_verified) {
 		this.emailVerified = email_verified;
 	}
 
-	/**
-	 * @return the nickname_verified
-	 */
 	public Boolean getUsernameVerified() {
 		return usernameVerified;
 	}
 
-	/**
-	 * @param nickname_verified
-	 *            the nickname_verified to set
-	 */
 	public void setUsernameVerified(Boolean nickname_verified) {
 		this.usernameVerified = nickname_verified;
 	}
 
-	/**
-	 * @return the profile_pic
-	 */
 	public String getProfilePic() {
 		return profilePic;
 	}
 
-	/**
-	 * @param profile_pic
-	 *            the profile_pic to set
-	 */
 	public void setProfilePic(String profile_pic) {
 		this.profilePic = profile_pic;
 	}
-
-	// /**
-	// * @return the cryptpass
-	// */
-	// public String getCryptpass() {
-	// return cryptpass;
-	// }
-	//
-	// /**
-	// * @param cryptpass the cryptpass to set
-	// */
-	// public void setCryptpass(String cryptpass) {
-	// this.cryptpass = cryptpass;
-	// }
-
-	/**
-	 * @return the conf_type
-	 */
+	
 	public String getConfType() {
 		return confType;
 	}
 
-	/**
-	 * @param conf_type
-	 *            the conf_type to set
-	 */
 	public void setConfType(String conf_type) {
 		this.confType = conf_type;
 	}
@@ -566,11 +489,6 @@ public class User extends Model implements Subject {
 		this.linkedAccounts = linkedAccounts;
 	}
 
-	// Auxiliary SETTERS and GETTERS
-
-	/**
-	 * @return the personId
-	 */
 	public Long getPersonId() {
 		if (this.person != null) {
 			return this.person.getPersonId();
@@ -580,10 +498,6 @@ public class User extends Model implements Subject {
 
 	}
 
-	/**
-	 * @param personId
-	 *            the personId to set
-	 */
 	public void setPersonId(Long personId) {
 		if (this.person == null) {
 			this.person = new Person();
@@ -595,7 +509,7 @@ public class User extends Model implements Subject {
 	public List<? extends Role> getRoles() {
 		return roles;
 	}
-
+	
 	public void addSecurityRole(SecurityRole role) {
 		roles.add(role);
 	}
@@ -611,5 +525,9 @@ public class User extends Model implements Subject {
 
 	public static void deleteForce(Long uid) {
 		find.ref(uid).delete();
+	}
+
+	public void setRoles(List<SecurityRole> singletonList) {
+		this.roles = singletonList;
 	}
 }

@@ -11,37 +11,41 @@ import play.mvc.*;
 import pojos.UserBean;
 import pojos.ResponseStatusBean;
 
-
 public class UserControl extends Controller {
- 
+
 	static Form<UserBean> userForm = Form.form(UserBean.class);
-	
+
+	@Security.Authenticated(Secured.class)
 	public static Result getUsers() {
-    	List<UserBean> listUsers = UserDelegate.getInstance().getAll();
+		List<UserBean> listUsers = UserDelegate.getInstance().getAll();
 		return listUsers != null ? ok(toJson(listUsers)) : notFound();
-    }
+	}
 
-    public static Result getUser(Long uid) {
-    	UserBean bean = UserDelegate.getInstance().getUser(uid);
+	@Security.Authenticated(Secured.class)
+	public static Result getUser(Long uid) {
+		UserBean bean = UserDelegate.getInstance().getUser(uid);
 		return bean != null ? ok(toJson(bean)) : notFound();
-    }
+	}
 
-    public static Result getUserByEmail() {
-    	Form<UserBean> filledForm = userForm.bindFromRequest();
-    	if (filledForm.hasErrors()) {
+	@Security.Authenticated(Secured.class)
+	public static Result getUserByEmail() {
+		Form<UserBean> filledForm = userForm.bindFromRequest();
+		if (filledForm.hasErrors()) {
 			ResponseStatusBean res = new ResponseStatusBean(
 					ResponseStatus.BADREQUEST,
 					"Body of request misses some information or it is malformed");
 			return badRequest(toJson(res));
 		} else {
 			UserBean userBean = filledForm.get();
-			UserBean bean = UserDelegate.getInstance().getUserByEmail(userBean.getEmail());
+			UserBean bean = UserDelegate.getInstance().getUserByEmail(
+					userBean.getEmail());
 			return bean != null ? ok(toJson(bean)) : notFound();
 		}
-    }
-    
-    public static Result createUser() {
-    	Form<UserBean> filledForm = userForm.bindFromRequest();
+	}
+
+	@Security.Authenticated(Secured.class)
+	public static Result createUser() {
+		Form<UserBean> filledForm = userForm.bindFromRequest();
 		if (filledForm.hasErrors()) {
 			ResponseStatusBean res = new ResponseStatusBean(
 					ResponseStatus.BADREQUEST,
@@ -52,9 +56,10 @@ public class UserControl extends Controller {
 			UserDelegate.getInstance().create(userBean);
 			return ok(toJson(userBean));
 		}
-    }    
-     
-   public static Result updateUser(Long uid) {
+	}
+
+	@Security.Authenticated(Secured.class)
+	public static Result updateUser(Long uid) {
 		Form<UserBean> filledForm = userForm.bindFromRequest();
 		if (filledForm.hasErrors()) {
 			ResponseStatusBean res = new ResponseStatusBean(
@@ -73,10 +78,10 @@ public class UserControl extends Controller {
 				return badRequest(toJson(res));
 			}
 		}
-    }
+	}
 
-   
-   public static Result deleteUser(Long uid) {
+	@Security.Authenticated(Secured.class)
+	public static Result deleteUser(Long uid) {
 		try {
 			UserDelegate.getInstance().deleteUser(uid);
 			ResponseStatusBean res = new ResponseStatusBean(ResponseStatus.OK,
@@ -88,10 +93,10 @@ public class UserControl extends Controller {
 					e.getMessage());
 			return badRequest(toJson(res));
 		}
-   }
+	}
 
-
-   public static Result deleteUserForce(Long uid) {
+	@Security.Authenticated(Secured.class)
+	public static Result deleteUserForce(Long uid) {
 		try {
 			UserDelegate.getInstance().deleteUserForce(uid);
 			ResponseStatusBean res = new ResponseStatusBean(ResponseStatus.OK,
@@ -103,7 +108,6 @@ public class UserControl extends Controller {
 					e.getMessage());
 			return badRequest(toJson(res));
 		}
-   }
+	}
 
-   
 }

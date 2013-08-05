@@ -71,6 +71,13 @@ public class City extends Model {
         return find.where().eq("country.short_name", countryName).findList();
     }
     
+    public static List<City> readByCountryNameAndRegion(String country2,
+			String region2) {
+        return find.where().eq("country.short_name", country2)
+        		.eq("region",region2)
+        		.findList();
+	}
+    
     public static List<City> readNewById(Long lastCityId){
         return find.where().gt("cityId", lastCityId).findList();
     }
@@ -183,6 +190,4 @@ public class City extends Model {
 	public void setLon(Double lon) {
 		this.lon = lon;
 	}
-	
-	
 }
