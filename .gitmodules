@@ -4,3 +4,6 @@
 [submodule "reminiscens-lifeapi"]
 	path = reminiscens-lifeapi
 	url = https://github.com/cdparra/reminiscens-lifeapi.git
+[submodule "lifecontext"]
+	path = lifecontext
+	url = https://github.com/cdparra/lifecontext.git
