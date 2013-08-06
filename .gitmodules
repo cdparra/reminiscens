@@ -10,3 +10,6 @@
 [submodule "elder.tl"]
 	path = elder.tl
 	url = https://github.com/cdparra/elder.tl.git
+[submodule "preliminary"]
+	path = preliminary
+	url = https://github.com/cdparra/reminiscens-sidekick.git
