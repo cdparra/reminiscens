@@ -1,3 +1,6 @@
 [submodule "reminiscensui"]
 	path = reminiscensui
 	url = https://github.com/cdparra/reminiscensui
+[submodule "reminiscens-lifeapi"]
+	path = reminiscens-lifeapi
+	url = https://github.com/cdparra/reminiscens-lifeapi.git
