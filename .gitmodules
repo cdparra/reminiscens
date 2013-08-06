@@ -7,3 +7,6 @@
 [submodule "lifecontext"]
 	path = lifecontext
 	url = https://github.com/cdparra/lifecontext.git
+[submodule "elder.tl"]
+	path = elder.tl
+	url = https://github.com/cdparra/elder.tl.git
